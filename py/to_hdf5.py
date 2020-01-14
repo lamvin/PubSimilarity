@@ -92,7 +92,7 @@ with open(data_path+'pub_full.txt', newline='') as f:
     reader = csv.reader(f,delimiter='\t')
     next(reader)
     text = ''
-    for i in tqdm(range(nb_l)):
+    for i in range(nb_l):
         line = next(reader)
         abstract['Id_Art'] = int(line[0])
         abstract['Ordre'] = int(line[1])
