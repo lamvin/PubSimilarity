@@ -25,8 +25,8 @@ class PubExp(IsDescription):
 # In[4]:
 
 
-data_path = "/mnt/disks/sec/data/"
-
+#data_path = "/mnt/disks/sec/data/"
+data_path = "home/User1/data/"
 
 
 # In[5]:
@@ -84,23 +84,26 @@ prev_ID = None
 block = []
 first_block = True
 with open(data_path+'pub_full.txt', newline='') as f:
-    reader = csv.reader(f,delimiter='\t')
+    reader = csv.reader(f,delimiter='\t', quoting=csv.QUOTE_NONE)
     next(reader)
     text = ''
     for i in tqdm(range(nb_l)):
-        line = next(reader)
-        abstract['Id_Art'] = int(line[0])
-        abstract['Ordre'] = int(line[1])
-        cur_text = preprocess(line[2])
-        abstract['Abstract'] = cur_text
-        abstract.append()
-        ID = line[0]
-        if ID == prev_ID:
-            text = text + ' ' + cur_text
-        else:
-            block.append(text)
-            text = cur_text
-        prev_ID = ID
+        try:
+        	line = next(reader)
+            abstract['Id_Art'] = int(line[0])
+            abstract['Ordre'] = int(line[1])
+            cur_text = preprocess(line[2])
+            abstract['Abstract'] = cur_text
+            abstract.append()
+            ID = line[0]
+            if ID == prev_ID:
+                text = text + ' ' + cur_text
+            else:
+                block.append(text)
+                text = cur_text
+            prev_ID = ID
+        except(csv.error):
+            pass
         if (i+1)%block_len == 0:
             if first_block:
                 dct = Dictionary([[line for line in doc.split()] for doc in block])
