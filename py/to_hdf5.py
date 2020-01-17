@@ -1,13 +1,6 @@
 
 # coding: utf-8
 
-# In[1]:
-
-
-get_ipython().run_cell_magic('capture', '', 'from tqdm import tqdm_notebook as tqdm')
-
-
-# In[2]:
 
 
 import zipfile
@@ -16,7 +9,9 @@ import time
 import csv
 import re
 import string
-
+import tqdm
+import sys
+csv.field_size_limit(sys.maxsize)
 
 # In[3]:
 
@@ -92,7 +87,7 @@ with open(data_path+'pub_full.txt', newline='') as f:
     reader = csv.reader(f,delimiter='\t')
     next(reader)
     text = ''
-    for i in range(nb_l):
+    for i in tqdm(range(nb_l)):
         line = next(reader)
         abstract['Id_Art'] = int(line[0])
         abstract['Ordre'] = int(line[1])
