@@ -89,7 +89,7 @@ with open(data_path+'pub_full.txt', newline='') as f:
     text = ''
     for i in tqdm(range(nb_l)):
         try:
-        	line = next(reader)
+            line = next(reader)
             abstract['Id_Art'] = int(line[0])
             abstract['Ordre'] = int(line[1])
             cur_text = preprocess(line[2])
