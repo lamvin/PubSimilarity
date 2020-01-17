@@ -2,14 +2,13 @@
 # coding: utf-8
 
 
-
+import numpy as np
 import zipfile
 from tables import *
 import time
 import csv
 import re
 import string
-import tqdm
 import sys
 csv.field_size_limit(sys.maxsize)
 
@@ -26,7 +25,7 @@ class PubExp(IsDescription):
 
 
 #data_path = "/mnt/disks/sec/data/"
-data_path = "home/User1/data/"
+data_path = "/home/User1/data/"
 
 
 # In[5]:
@@ -87,7 +86,9 @@ with open(data_path+'pub_full.txt', newline='') as f:
     reader = csv.reader(f,delimiter='\t', quoting=csv.QUOTE_NONE)
     next(reader)
     text = ''
-    for i in tqdm(range(nb_l)):
+    for i in range(nb_l-1):
+        if i%10000 == 0:
+            print('Progress: {}%'.format(np.round(i/nb_l,3)*100))
         try:
             line = next(reader)
             abstract['Id_Art'] = int(line[0])
